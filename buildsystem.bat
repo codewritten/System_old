@@ -19,10 +19,6 @@ rem Remove main.lua which changes.txt, information.lua build.settings and config
 
 zip -dq system.zip source/main.lua source/information.lua source/build.settings source/config.lua
 
-rem Remove private documentation.
-
-zip -drq system.zip documentation/private
-
 rem Remove any stuff here for testing the System but which we don't want generally.
 
 zip -dq system.zip source/__*.*
