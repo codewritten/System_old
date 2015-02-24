@@ -26,7 +26,7 @@ end
 
 ads.init( "crossinstall", "cGCk", adListener )
 ads.show( "banner", "my placement name", { x=0, y=430, w=320, h=50, timeout=15 } )
---[[
+
 require("system.core")
 --require("__coretest")
 
@@ -66,7 +66,7 @@ g2 = System:new("system.scene")
 
 for n = 1,10 do 
 	i1 = g1:new("circle",{ x = 100,y = 100+n*20 })
-	i2 = g1:new("thingy",{ x = display.contentWidth - 30,y = display.contentHeight - 10-n*33 })
+	i2 = g2:new("thingy",{ x = display.contentWidth - 30,y = display.contentHeight - 10-n*33 })
 end
 
 rcp = System:createClass("recipient")
@@ -77,12 +77,12 @@ rcp1 = System:new("recipient")
 
 timer.performWithDelay(10,
 	function()
-		local w = math.floor(system.getTimer()/20) % 100
+		local w = math.floor(system.getTimer()/50) % 100
 		g1:setAlpha(w/100)
 		g2:setAlpha((1-w/100))
 	end,0
 )
---]]
+
 -- ****************************************************************************************************************
 --		Date		Changes Made
 --		----		------------
