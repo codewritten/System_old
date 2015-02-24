@@ -1,0 +1,7 @@
+Document in outline changes made here as well as the github repository. Detailed changes should be in the relevant source file.
+
+Date		Version 	Notes
+---- 		------- 	-----
+23/Nov/14	1 			Repository created.
+
+This file should not be included in the system.zip archive.
