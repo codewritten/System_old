@@ -61,14 +61,14 @@ class ConfigGenerator:
 		settings = { "orientation":{}, "plugins":{}, "excludeFiles":{}, "android":{}, "iPhone":{} }
 
 		if self.orientation == "landscape":													# orientation, default and allowable
-			settings["orientation"] = { "default":"landscape", "supported":'{ "landscapeLeft","landscapeRight" }' }
+			settings["orientation"] = { "default":"landscape", "supported":[ "landscapeLeft","landscapeRight" ] }
 		else:
-			settings["orientation"] = { "default":"portrait", "supported":'{ "portrait","portraitUpsideDown" }' }
+			settings["orientation"] = { "default":"portrait", "supported":[ "portrait","portraitUpsideDown" ] }
 
 
 		settings["plugins"] = self.getAdvertisingPlugins(advertList) 						# get the required plugins.
 
-		settings["excludeFiles"]["all"] = " { 'exclude/*' }"								# we exclude the exclude directory whatever
+		settings["excludeFiles"]["all"] = ['exclude/*']										# we exclude the exclude directory whatever
 
 		settings["android"]["usesPermissions"] = self.getPermissionList()					# set up permissions
 
@@ -103,24 +103,24 @@ class ConfigGenerator:
 	#
 	def getUILaunchImageTable(self):														# from Corona's build.settings guide.
 		defList = [("Default",320,480),("Default-568h",320,568),("Default-Portrait",768,1024),("Default-667h",375,667),("Default-736h",414,736)]
-		liTable = {}																		# table of launch image descriptors
+		liTable = []																		# table of launch image descriptors
 		n = 100																				# order for !n (100 because sort alphabetically)
 		for df in defList:																	# work through defs
 			version = "8.0" if df[2] == 667 or df[2] == 736 else "7.0"						# work out versions
 			for orient in ["Portrait","LandscapeLeft","LandscapeRight"]:					# for each orientation
-				liItem = []																	# create table
+				liItem = {}																	# create table
 				name = df[0]																# work out name
 				if orient != "Portrait":													# some change, some don't ...
 					if name == "Default-Portrait":
 						name = "Default-Landscape"
 					if name == "Default-736h":
 						name = "Default-Landscape-736h"
-				#print(name,orient,df[1],df[2],version)
-				liItem.append('["UILaunchImageMinimumOSVersion"] = "'+version+'"')			# add data formatted
-				liItem.append('["UILaunchImageName"] = "'+name+'"')
-				liItem.append('["UILaunchImageOrientation"] = "'+orient+'"')
-				liItem.append('["UILaunchImageSize"] = "{'+str(df[1])+', '+str(df[2])+'}"')
-				liTable["!"+str(n)] = liItem												# store in dictionary
+
+				liItem['["UILaunchImageMinimumOSVersion"]'] = version							# add data formatted
+				liItem['["UILaunchImageName"]'] = name
+				liItem['["UILaunchImageOrientation"]'] = orient
+				liItem['["UILaunchImageSize"]'] = "{"+str(df[1])+", "+str(df[2])+"}"
+				liTable.append(liItem)
 				n = n + 1
 		return liTable
 

@@ -10,7 +10,8 @@
 -- ****************************************************************************************************************
 
 local ads = require "ads"
-
+require("information")
+print(ApplicationInformation.adverts.admob)
 local function adListener( event )
   -- event table includes:
   --    event.provider

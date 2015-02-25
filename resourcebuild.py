@@ -46,7 +46,7 @@ dic.create(True,"source",(255,255,255,0))
 #	Copying text/info files to build area\media converting to lua structure.
 #
 print("Copying           : Text/Configuration files")
-TextCopier("media"+os.sep+"text").copy(["txt","inf","cfg"],"source"+os.sep+"media")
+TextCopier("media"+os.sep+"text").copy(["xml"],"source"+os.sep+"media")
 #
 #	Copying sound effects etc. to build area\media
 #
