@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<!--
+	This **MUST** be changed. 
+
+	The reason being that this is all specific to me. It is especially important to change the advertising IDs at the bottom of 
+	this configuration file, because these will be either IDs specific to me, or fake ones. In either case,  monetising won't 
+	work for you (though it would work great for me ....)
+	
+-->
+
+<data>
+
+	<!--	This describes the application itself. -->
+
+	<application>
+		<name>System Testing Application</name> 							<!-- displayed name of application -->
+		<version>1.0</version>												<!-- version number-->
+		<date>01-Jan-2015</date>											<!-- release date-->
+		<fqdn>uk.org.robsons.systemtest</fqdn>								<!-- unique identifier, usually same as FQDN in Build-->
+		<orientation>portrait</orientation>									<!-- standard orientation.-->
+	</application>
+
+	<!--	This configures various features of the application-->
+
+	<configuration>
+		<adverts>yes</adverts>												<!-- if no, adverts will not be displayed-->
+		<interstitialStartTime>120</interstitialStartTime>					<!-- time (secs) before interstitial is displayed first-->
+		<interstitialWaitTime>60</interstitialWaitTime>						<!-- time (secs) between subsequent interstitials.	-->
+		<usesBanners>no</usesBanners>										<!-- do we use banners ?-->
+		<usesInterstitials>yes</usesInterstitials>							<!-- do we use interstitials ?-->
+		<launchBackground>0,0,0,255</launchBackground> 						<!-- RGBA components of background of display launch image.-->
+	</configuration>																
+
+	<!--	This is the identity of the developer(s) or the company name.-->
+
+	<identity>
+		<name>Paul Robson</name>											<!-- names of developer(s)-->
+		<email>paul@robsons.org.uk</email>									<!-- email for assistance (optional)-->
+	</identity>
+
+	<!--	These specify the advertising IDs used by iOS/Android advertising platforms. Obviously you need to change this if you 
+			want advertising revenue to go to someone other than me :)-->
+
+	<admob>
+		<iosBanner>ca-app-pub-8354094658055499/2627236812</iosBanner>		
+		<iosInterstitial>ca-app-pub-8354094658055499/4103970018</iosInterstitial>		
+		<androidBanner>ca-app-pub-8354094658055499/8394568819</androidBanner>		
+		<androidInterstitial>ca-app-pub-8354094658055499/2348035218</androidInterstitial>
+	</admob>
+
+	<crossinstall>
+	</crossinstall>
+
+	<vungle>
+		<iosInterstitial>54a96aaa5774df504200004a</iosInterstitial>		
+		<androidInterstitial>54a96ae3f358e2bd72000026</androidInterstitial>
+	</vungle>
+
+	<inneractive>
+	</inneractive>
+
+	<inmobi>
+	</inmobi>
+</data>
