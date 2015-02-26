@@ -48,21 +48,12 @@ class LuaFormatter:
 
 		return text
 
-# TODO: Processing as follows.
-# "<word>" becomes word 
-# "[\"<sometext>\"]" becomes ["<sometext>"] 
-
 
 #  ****************************************************************************************************************
 # 		Date		Changes Made
 #		----		------------
 #		31 Dec 14 	First working version.
+#		26 Feb 15 	Rewritten completely, uses the Python JSON convertor and reformats the output to allow
+#					generation of lua compatible source (required for config.lua and build.settings at least)
 # 
 #  ****************************************************************************************************************
-
-#		text = text.replace('\"[\\"','[\"')							# Replace "[/" with just ["
-#		text = text.replace('\\"]\"','\"]')							# Replace \"]" with just "]
-
-#		cmd = '\"([\\w\"\[\]\\\]+)\"\:'
-#		p = re.compile(cmd)
-#		text = p.sub("\\1 =",text)

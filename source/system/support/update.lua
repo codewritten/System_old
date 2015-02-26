@@ -56,7 +56,7 @@ function UpdateManager:enterFrame()
 	end 
 	if count == 0 then return end 																-- nothing to update 
 	for ref,_ in pairs(instances) do 															-- work through all the instances
-		if ref:isAlive() and not ref:__execute("onUpdate",deltaTime) then 						-- did it fail to work ?
+		if ref:isAlive() and not ref:__execute("onUpdate",deltaTime,self.m_rawOnly) then 		-- did it fail to work ?
 			self.m_errorOccurred = true 														-- block more updates
 			break 																				-- abort the loop
 		end 
@@ -65,11 +65,11 @@ end
 
 
 --*****************************************************************************************************************
----		@method 	Root.__setRawTimerUpdateOnly	Set the raw text update only flag
+---		@method 	Root.__setRawTimerUpdate	Set the raw text update flag
 ---		@param 		isOn<boolean>
 --*****************************************************************************************************************
 
-function UpdateManager:__setRawTimerUpdateOnly(isOn)
+function UpdateManager:__setRawTimerUpdate(isOn)
 	assert(isOn ~= nil and type(isOn) == "boolean")												-- check type of parameter
 	local oldValue = (self.m_rawOnly == true)													-- preserve old value
 	self.m_rawOnly = isOn 																		-- update new value
@@ -90,4 +90,8 @@ System:__defineGlobalMethod("__setRawTimerUpdateOnly",											-- create the s
 --		25-Nov-14 	Coding ended
 --		31-Dec-14 	Code Read #1. Added isAlive() test to update loop as assumption was wrong - onUpdate() could 
 -- 								  delete objects consequentially.
+--		26-Feb-15 	onUpdate() call was not passing self_isRawOnly (e.g. the isRawUpdate parameter in the docs)
+--					setTimerRawUpdateOnly() renamed setTimerRawUpdate() as name is confusing (as are the docs)
+--					both are clarified so that this flag says whether update or rawupdate tag list is used.
+--					(see line 6 approx of enterFrame - it is either/or).
 -- ****************************************************************************************************************
