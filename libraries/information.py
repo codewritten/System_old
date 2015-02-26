@@ -10,6 +10,7 @@
 #  ****************************************************************************************************************
 
 import re,os
+import xml.etree.ElementTree as xml
 from libraries.formatter import LuaFormatter
 
 #
@@ -24,7 +25,7 @@ class InformationLoader:
 
 	def loadInfo(self):
 		initial = { "application":{}, "configuration":{}, "identity":{}}					# information structure
-		self.information = self.load("information.txt",initial)								# load it in.
+		self.information = self.load("information.xml",initial)								# load it in.
 		self.usesAdverts = self.getBoolean("configuration","adverts")						# adverts used ?
 		self.usesBanners = self.getBoolean("configuration","usesBanners") 					# do we use banners and interstitials ?
 		self.usesInterstitials = self.getBoolean("configuration","usesInterstitials")
@@ -43,26 +44,14 @@ class InformationLoader:
 		return self 
 
 	def load(self,fileName,initial):
-		loading = initial																	# information structure
-		currentSection = None 																# not writing anywhere yet.
-		l = open(fileName).readlines() 														# read in information.
-		l = [x[:x.find("#")] if x.find("#") >= 0 else x for x in l] 						# remove comments
-		l = [x.replace("\t"," ") for x in l]												# remove tabs
-		l = [x.strip() for x in l if x.strip() != ""] 										# remove spaces and blank lines.
-		for line in l:																		# work through it.
-			if line[0] == '[':																# new section.
-				section = line[1:-1].lower()												# get section name
-				if section not in loading:													# does it exist ?
-					loading[section] = {} 													# if not, create a blank section
-				currentSection = loading[section]											# current section being written to
-			else:
-				s = re.search("^([A-Za-z0-9]+)\\s*\\=\\s*(.*)$",line)						# Match as a = b		
-				if s is None: 																# fail if doesn't match.
-					raise Exception("Bad line in information.txt : "+line)
-				key = s.group(1).lower() 													# key always l/c
-				assert key not in currentSection 											# not already defined.
-				currentSection[key] = s.group(2).strip()									# store key/value
-		return loading
+		tree = xml.parse(fileName)															# access the XML tree
+		root = tree.getroot()																# access the root.
+		for section in root:																# work through the sections
+			if section.tag.lower() not in initial:											# create hash if required.
+				initial[section.tag.lower()] = {}
+			for key in section:																# work through sections children.
+				initial[section.tag.lower()][key.tag.lower()] = key.text					# copying the children in.
+		return initial
 
 	def generate(self,directory):
 		self.infoCopy = {}																	# Copy the information dictionary.
@@ -83,7 +72,7 @@ class InformationLoader:
 
 	def getSupportedAdverts(self):
 		if not self.usesAdverts:															# adverts not used.
-			return []			
+			return ""			
 		adPossibles = self.getAdvertList().split(",")										# List of possible advertisers
 		adSupported = [] 																	# List that pass
 		for ads in adPossibles: 															# scan through.
@@ -117,5 +106,6 @@ class InformationLoader:
 # 		Date		Changes Made
 #		----		------------
 #		11 Jan 14 	First working version.
+#		26 Feb 15 	Converted to parse XML rather than text files.
 # 
 #  ****************************************************************************************************************
